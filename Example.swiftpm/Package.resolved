@@ -1,0 +1,24 @@
+{
+  "originHash" : "88af295b7a71292e7a65a325ef161bb3f9aa87d5277de1bcc35169d398930c28",
+  "pins" : [
+    {
+      "identity" : "collectionviewdistributionallayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/noppefoxwolf/CollectionViewDistributionalLayout",
+      "state" : {
+        "revision" : "fbf176e53e5cf530f7897dcaf4cafb9c3add4d2e",
+        "version" : "0.0.4"
+      }
+    },
+    {
+      "identity" : "pager",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/noppefoxwolf/Pager",
+      "state" : {
+        "revision" : "66952e8b089db230263118fc5e9960e7a1bc97b9",
+        "version" : "0.2.7"
+      }
+    }
+  ],
+  "version" : 3
+}

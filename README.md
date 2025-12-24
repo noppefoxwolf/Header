@@ -82,3 +82,6 @@ open Example.swiftpm
 swift build
 swift test
 ```
+
+## License
+MIT. See `LICENSE`.

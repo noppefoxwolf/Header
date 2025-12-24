@@ -1,5 +1,7 @@
 # Header
 
+![](.github/example.gif)
+
 A stretch header container for UIKit. The header expands and contracts with scrolling, and lets you lay out both content and a palette (such as a row of buttons) inside the header.
 
 ## Features

@@ -78,9 +78,13 @@ open Example.swiftpm
 ```
 
 ## Build / Test
+
 ```sh
-swift build
-swift test
+xcodebuild -scheme Header -destination "platform=iOS Simulator,name=iPhone 17,OS=latest"
+```
+
+```sh
+xcodebuild -scheme Header test -destination "platform=iOS Simulator,name=iPhone 17,OS=latest"
 ```
 
 ## License

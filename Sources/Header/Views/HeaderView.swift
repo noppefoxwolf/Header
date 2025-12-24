@@ -1,7 +1,6 @@
 import UIKit
 
 public final class HeaderView: UIView {
-    private let backgroundExtensionView: BackgroundView = makeCompatibleBackgroundView()
     private let stackView = UIStackView()
     private var _backgroundView: UIView = EmptyView()
     private var _contentView: UIView = EmptyView()
@@ -20,10 +19,6 @@ public final class HeaderView: UIView {
     public var paletteView: UIView {
         get { _paletteView }
         set { setPaletteView(newValue) }
-    }
-    
-    public var topBackgroundContentMargin: CGFloat {
-        backgroundExtensionView.topContentMargin
     }
     
     override init(frame: CGRect) {
@@ -46,7 +41,7 @@ public final class HeaderView: UIView {
     func contentViewTopOffset(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
         let backgroundHeight = _backgroundView.systemLayoutSizeFitting(targetSize).height
-        return backgroundHeight + topBackgroundContentMargin
+        return backgroundHeight
     }
 
     func paletteHeight(for width: CGFloat) -> CGFloat {
@@ -61,6 +56,7 @@ public final class HeaderView: UIView {
         stackView.alignment = .fill
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        
         if _backgroundView.superview != nil {
             _backgroundView.removeFromSuperview()
         }
@@ -70,11 +66,8 @@ public final class HeaderView: UIView {
         if _paletteView.superview != nil {
             _paletteView.removeFromSuperview()
         }
-
-        _backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        backgroundExtensionView.contentView = _backgroundView
-        backgroundExtensionView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.addArrangedSubview(backgroundExtensionView)
+        
+        stackView.addArrangedSubview(_backgroundView)
         stackView.addArrangedSubview(_contentView)
         stackView.addArrangedSubview(_paletteView)
         _contentView.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -92,21 +85,18 @@ public final class HeaderView: UIView {
     private func setBackgroundView(_ newView: UIView) {
         guard newView !== _backgroundView else { return }
 
+        stackView.replaceArrangedSubview(_backgroundView, with: newView, after: _backgroundView, fallbackIndex: 0)
         _backgroundView = newView
 
-        newView.clipsToBounds = true
-        newView.translatesAutoresizingMaskIntoConstraints = false
-        if newView.superview != nil {
-            newView.removeFromSuperview()
-        }
-        backgroundExtensionView.contentView = newView
+        newView.setContentHuggingPriority(.defaultLow, for: .vertical)
+        newView.insetsLayoutMarginsFromSafeArea = false
         setNeedsLayout()
     }
 
     private func setContentView(_ newView: UIView) {
         guard newView !== _contentView else { return }
 
-        stackView.replaceArrangedSubview(_contentView, with: newView, after: backgroundExtensionView, fallbackIndex: 1)
+        stackView.replaceArrangedSubview(_contentView, with: newView, after: _backgroundView, fallbackIndex: 1)
         _contentView = newView
 
         newView.setContentHuggingPriority(.defaultHigh, for: .vertical)

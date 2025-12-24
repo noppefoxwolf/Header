@@ -48,7 +48,7 @@ public final class HeaderViewController: UIViewController {
     }
     
     private var topInset: CGFloat {
-        -view.safeAreaInsets.top + headerView.topBackgroundContentMargin
+        -view.safeAreaInsets.top
     }
     
     // MARK: - Child View Controller

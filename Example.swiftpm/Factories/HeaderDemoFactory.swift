@@ -10,9 +10,16 @@ enum HeaderDemoFactory {
     ) -> HeaderViewController {
         let headerViewController = HeaderViewController(rootViewController: rootViewController)
         headerViewController.delegate = rootViewController
-        let headerBackgroundHostingController = makeHostingController(rootView: HeaderBackgroundView())
+        let headerBackgroundHostingController = makeHostingController(rootView: HeaderBackgroundContentView())
         addChild(headerBackgroundHostingController, to: headerViewController) {
-            headerViewController.headerView.backgroundView = headerBackgroundHostingController.view
+            if #available(iOS 26.0, *) {
+                let headerBackgroundView = HeaderBackgroundView()
+                let headerBackgroundContentView = headerBackgroundHostingController.view!
+                headerBackgroundView.contentView = headerBackgroundContentView
+                headerViewController.headerView.backgroundView = headerBackgroundView
+            } else {
+                headerViewController.headerView.backgroundView = headerBackgroundHostingController.view
+            }
         }
         
         let headerContentHostingController = makeHostingController(rootView: HeaderContentView())

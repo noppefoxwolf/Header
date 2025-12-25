@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct HeaderBackgroundContentView: View {
+struct HeaderBannerView: View {
     var body: some View {
         Image(.header)
             .resizable()

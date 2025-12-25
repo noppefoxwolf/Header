@@ -22,6 +22,11 @@ final class ActiveScrollViewCoordinator {
 
     func startObserving(_ scrollView: UIScrollView) {
         guard activeScrollView !== scrollView else { return }
+        
+        // Disabled navigationBar background auto-luminance
+        if #available(iOS 26.0, *) {
+            scrollView.topEdgeEffect.isHidden = true
+        }
         activeScrollView = scrollView
 
         // Cancel previous subscription to avoid multiple sinks.

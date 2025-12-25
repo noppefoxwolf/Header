@@ -2,13 +2,13 @@ import UIKit
 
 public final class HeaderView: UIView {
     private let stackView = UIStackView()
-    private var _backgroundView: UIView = EmptyView()
+    private var _bannerView: UIView = EmptyView()
     private var _contentView: UIView = EmptyView()
     private var _paletteView: UIView = EmptyView()
 
-    public var backgroundView: UIView {
-        get { _backgroundView }
-        set { setBackgroundView(newValue) }
+    public var bannerView: UIView {
+        get { _bannerView }
+        set { setBannerView(newValue) }
     }
     
     public var contentView: UIView {
@@ -32,7 +32,7 @@ public final class HeaderView: UIView {
 
     func headerViewHeight(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let backgroundHeight = _backgroundView.systemLayoutSizeFitting(targetSize).height
+        let backgroundHeight = _bannerView.systemLayoutSizeFitting(targetSize).height
         let contentHeight = _contentView.systemLayoutSizeFitting(targetSize).height
         let paletteHeight = _paletteView.systemLayoutSizeFitting(targetSize).height
         return backgroundHeight + contentHeight + paletteHeight
@@ -40,7 +40,7 @@ public final class HeaderView: UIView {
 
     func contentViewTopOffset(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let backgroundHeight = _backgroundView.systemLayoutSizeFitting(targetSize).height
+        let backgroundHeight = _bannerView.systemLayoutSizeFitting(targetSize).height
         return backgroundHeight
     }
 
@@ -57,8 +57,8 @@ public final class HeaderView: UIView {
         stackView.distribution = .fill
         stackView.translatesAutoresizingMaskIntoConstraints = false
         
-        if _backgroundView.superview != nil {
-            _backgroundView.removeFromSuperview()
+        if _bannerView.superview != nil {
+            _bannerView.removeFromSuperview()
         }
         if _contentView.superview != nil {
             _contentView.removeFromSuperview()
@@ -67,7 +67,7 @@ public final class HeaderView: UIView {
             _paletteView.removeFromSuperview()
         }
         
-        stackView.addArrangedSubview(_backgroundView)
+        stackView.addArrangedSubview(_bannerView)
         stackView.addArrangedSubview(_contentView)
         stackView.addArrangedSubview(_paletteView)
         _contentView.setContentHuggingPriority(.defaultHigh, for: .vertical)
@@ -82,11 +82,11 @@ public final class HeaderView: UIView {
         ])
     }
 
-    private func setBackgroundView(_ newView: UIView) {
-        guard newView !== _backgroundView else { return }
+    private func setBannerView(_ newView: UIView) {
+        guard newView !== _bannerView else { return }
 
-        stackView.replaceArrangedSubview(_backgroundView, with: newView, after: _backgroundView, fallbackIndex: 0)
-        _backgroundView = newView
+        stackView.replaceArrangedSubview(_bannerView, with: newView, after: _bannerView, fallbackIndex: 0)
+        _bannerView = newView
 
         newView.setContentHuggingPriority(.defaultLow, for: .vertical)
         newView.insetsLayoutMarginsFromSafeArea = false
@@ -96,7 +96,7 @@ public final class HeaderView: UIView {
     private func setContentView(_ newView: UIView) {
         guard newView !== _contentView else { return }
 
-        stackView.replaceArrangedSubview(_contentView, with: newView, after: _backgroundView, fallbackIndex: 1)
+        stackView.replaceArrangedSubview(_contentView, with: newView, after: _bannerView, fallbackIndex: 1)
         _contentView = newView
 
         newView.setContentHuggingPriority(.defaultHigh, for: .vertical)

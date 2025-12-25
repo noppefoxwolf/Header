@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct PaletteView: View {
+struct HeaderPaletteView: View {
     let onSelectPage: ((Int) -> Void)?
 
     init(onSelectPage: ((Int) -> Void)? = nil) {

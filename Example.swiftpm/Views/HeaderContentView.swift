@@ -2,27 +2,30 @@ import SwiftUI
 
 struct HeaderContentView: View {
     var body: some View {
-        HStack(content: {
-            RoundedRectangle(cornerRadius: 32)
-                .frame(width: 100, height: 100)
-            VStack(alignment: .leading) {
-                Text("Title").font(.title).bold()
-                Text("Subtitle").font(.subheadline).foregroundStyle(.secondary)
+        VStack(alignment: .leading, spacing: 6) {
+            HStack(alignment: .bottom) {
                 Spacer()
-                HStack(alignment: .center) {
-                    Button {
-                        print("action")
-                    } label: {
-                        Text("Action")
-                    }
-                    .buttonStyle(.borderedProminent)
-                    Text("Hello, world!")
-                        .font(.caption2)
-                        .foregroundStyle(.tertiary)
+                
+                Button {
+                    print("action")
+                } label: {
+                    Text("Follow")
                 }
+                .buttonStyle(.borderedProminent)
             }
-            Spacer()
-        })
+            .overlay(alignment: .bottomLeading) {
+                Circle()
+                    .frame(width: 80, height: 80)
+                    .alignmentGuide(VerticalAlignment.top, computeValue: {
+                        $0[VerticalAlignment.center]
+                    })
+            }
+            
+            VStack(alignment: .leading) {
+                Text("Title").font(.headline).bold()
+                Text("Subtitle").font(.subheadline).foregroundStyle(.secondary)
+            }
+        }
         .padding()
     }
 }

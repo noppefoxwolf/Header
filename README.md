@@ -33,9 +33,9 @@ import Header
 let rootViewController = UITableViewController(style: .plain)
 let headerViewController = HeaderViewController(rootViewController: rootViewController)
 
-let headerImageView = UIImageView(image: UIImage(named: "header"))
-headerImageView.contentMode = .scaleAspectFill
-headerViewController.headerView.backgroundView = headerImageView
+let bannerView = UIImageView(image: UIImage(named: "header"))
+bannerView.contentMode = .scaleAspectFill
+headerViewController.headerView.bannerView = bannerView
 
 let headerContentView = UIView()
 headerViewController.headerView.contentView = headerContentView

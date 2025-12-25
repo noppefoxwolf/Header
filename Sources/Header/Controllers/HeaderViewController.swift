@@ -101,10 +101,11 @@ public final class HeaderViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.compactAppearance = UINavigationBarAppearance()
-        navigationItem.standardAppearance = UINavigationBarAppearance()
-        navigationItem.scrollEdgeAppearance = UINavigationBarAppearance()
-        navigationItem.compactScrollEdgeAppearance = UINavigationBarAppearance()
+        let appearance = UINavigationBarAppearance()
+        navigationItem.compactAppearance = appearance
+        navigationItem.standardAppearance = appearance
+        navigationItem.scrollEdgeAppearance = appearance
+        navigationItem.compactScrollEdgeAppearance = appearance
         
         pendingScrollOffsetSynchronizer = PendingScrollOffsetSynchronizer(
             activeScrollView: { [weak self] in self?.activeScrollView },
@@ -231,17 +232,17 @@ public final class HeaderViewController: UIViewController {
     private func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {
         guard let navigationBar = navigationController?.navigationBar else { return }
         func action() {
-            if hidden {
-                navigationItem.compactAppearance?.configureWithTransparentBackground()
-                navigationItem.standardAppearance?.configureWithTransparentBackground()
-                navigationItem.scrollEdgeAppearance?.configureWithTransparentBackground()
-                navigationItem.compactScrollEdgeAppearance?.configureWithTransparentBackground()
-            } else {
-                navigationItem.compactAppearance?.configureWithOpaqueBackground()
-                navigationItem.standardAppearance?.configureWithOpaqueBackground()
-                navigationItem.scrollEdgeAppearance?.configureWithOpaqueBackground()
-                navigationItem.compactScrollEdgeAppearance?.configureWithOpaqueBackground()
+            func apply(_ appearance: UINavigationBarAppearance?, hidden: Bool) {
+                if hidden {
+                    appearance?.configureWithTransparentBackground()
+                } else {
+                    appearance?.configureWithOpaqueBackground()
+                }
             }
+            apply(navigationItem.compactAppearance, hidden: hidden)
+            apply(navigationItem.standardAppearance, hidden: hidden)
+            apply(navigationItem.scrollEdgeAppearance, hidden: hidden)
+            apply(navigationItem.compactScrollEdgeAppearance, hidden: hidden)
         }
         
         if animated {

@@ -10,22 +10,20 @@ enum HeaderDemoFactory {
     ) -> HeaderViewController {
         let headerViewController = HeaderViewController(rootViewController: rootViewController)
         headerViewController.delegate = rootViewController
-        let headerBackgroundHostingController = makeHostingController(rootView: HeaderBackgroundContentView())
-        addChild(headerBackgroundHostingController, to: headerViewController) {
+        
+        let headerBannerHostingController = makeHostingController(rootView: HeaderBannerView())
+        addChild(headerBannerHostingController, to: headerViewController) {
             if #available(iOS 26.0, *) {
                 let headerBackgroundView = HeaderBackgroundView()
-                let headerBackgroundContentView = headerBackgroundHostingController.view!
-                headerBackgroundView.contentView = headerBackgroundContentView
-                headerViewController.headerView.backgroundView = headerBackgroundView
+                let headerBannerView = headerBannerHostingController.view!
+                headerBackgroundView.contentView = headerBannerView
+                headerViewController.headerView.bannerView = headerBackgroundView
             } else {
-                headerViewController.headerView.backgroundView = headerBackgroundHostingController.view
+                headerViewController.headerView.bannerView = headerBannerHostingController.view
             }
         }
         
-        let headerContentHostingController = makeHostingController(rootView: HeaderContentView())
-        addChild(headerContentHostingController, to: headerViewController) {
-            headerViewController.headerView.contentView = headerContentHostingController.view
-        }
+        headerViewController.setHeaderContentView(HeaderContentView())
         
         configurePalette(
             for: rootViewController,
@@ -83,7 +81,7 @@ enum HeaderDemoFactory {
                     onSelectPage = nil
                 }
                 let paletteHostingController = makeHostingController(
-                    rootView: PaletteView(onSelectPage: onSelectPage)
+                    rootView: HeaderPaletteView(onSelectPage: onSelectPage)
                 )
                 resolvedPalette = .viewController(paletteHostingController)
             }

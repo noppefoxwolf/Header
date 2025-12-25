@@ -239,6 +239,7 @@ public final class HeaderViewController: UIViewController {
                     appearance?.configureWithOpaqueBackground()
                 }
             }
+            
             apply(navigationItem.compactAppearance, hidden: hidden)
             apply(navigationItem.standardAppearance, hidden: hidden)
             apply(navigationItem.scrollEdgeAppearance, hidden: hidden)

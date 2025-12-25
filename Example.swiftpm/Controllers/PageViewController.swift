@@ -13,10 +13,17 @@ final class PageViewController: UIPageViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate = self
         dataSource = self
+        
+        if #available(iOS 26.0, *) {
+            let scrollView = value(forKey: "_scrollView") as! UIScrollView
+            scrollView.topEdgeEffect.isHidden = true
+        }
+        
         if let targetViewController = pages.first {
             setViewControllers([targetViewController], direction: .forward, animated: false) { [weak self] finished in
                 guard let self else { return }

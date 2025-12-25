@@ -19,6 +19,7 @@ final class PageViewController: UIPageViewController {
         delegate = self
         dataSource = self
         
+        // workaround: disabled luminance effect
         if #available(iOS 26.0, *) {
             let scrollView = value(forKey: "_scrollView") as! UIScrollView
             scrollView.topEdgeEffect.isHidden = true

@@ -1,4 +1,5 @@
 import Pager
+import SwiftUI
 import UIKit
 import Header
 
@@ -19,15 +20,14 @@ extension PagerPageViewController: Pager.PageViewControllerDelegate {
         pendingViewControllers.forEach {
             $0.loadViewIfNeeded()
         }
-        let scrollView = pendingViewControllers.compactMap({ $0.contentScrollView(for: .top) })[0]
-        scrollView.willMove(to: headerViewController!)
+        let scrollView = pendingViewControllers.compactMap({ $0.contentScrollView(for: .top) }).first
+        scrollView?.willMove(to: headerViewController!)
     }
     
     func didFinishTransition(_ pageViewController: Pager.PageViewController) {
         print("didFinishTransition")
-        if let scrollView = contentScrollView(for: .top) {
-            scrollView.didMove(to: headerViewController!)
-        }
+        let scrollView = contentScrollView(for: .top)
+        scrollView?.didMove(to: headerViewController!)
     }
 }
 
@@ -49,7 +49,7 @@ extension PagerPageViewController {
                 id: "1",
                 title: "Posts",
                 viewControllerProvider: { _ in
-                    CollectionViewController(title: "CollectionView:1", cellCount: 100)
+                    PlainViewController()
                 }),
             Page(
                 id: "2",

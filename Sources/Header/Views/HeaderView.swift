@@ -32,21 +32,42 @@ public final class HeaderView: UIView {
 
     func headerViewHeight(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let backgroundHeight = _bannerView.systemLayoutSizeFitting(targetSize).height
-        let contentHeight = _contentView.systemLayoutSizeFitting(targetSize).height
-        let paletteHeight = _paletteView.systemLayoutSizeFitting(targetSize).height
-        return backgroundHeight + contentHeight + paletteHeight
+        let bannerHeight = _bannerView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        let contentHeight = _contentView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        let paletteHeight = _paletteView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        return bannerHeight + contentHeight + paletteHeight
     }
 
     func contentViewTopOffset(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let backgroundHeight = _bannerView.systemLayoutSizeFitting(targetSize).height
-        return backgroundHeight
+        let bannerHeight = _bannerView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        return bannerHeight
     }
 
     func paletteHeight(for width: CGFloat) -> CGFloat {
         let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        return _paletteView.systemLayoutSizeFitting(targetSize).height
+        let paletteHeight = _paletteView.systemLayoutSizeFitting(
+            targetSize,
+            withHorizontalFittingPriority: .required,
+            verticalFittingPriority: .fittingSizeLevel
+        ).height
+        return paletteHeight
     }
 
     private func setup() {

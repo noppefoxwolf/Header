@@ -6,7 +6,7 @@ final class AdditionalSafeAreaInsetsCoordinator {
     private var contentSizeCancellables: [ObjectIdentifier: AnyCancellable] = [:]
     private var contentHeights: [ObjectIdentifier: CGFloat] = [:]
     private var currentBottomInsetValue: CGFloat = 0
-    private let rootViewController: UIViewController
+    private unowned let rootViewController: UIViewController
     private let inset: () -> CGFloat
     private let headerViewHeight: () -> CGFloat
     private let availableHeight: () -> CGFloat

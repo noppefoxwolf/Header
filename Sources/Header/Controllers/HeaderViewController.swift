@@ -119,6 +119,8 @@ public final class HeaderViewController: UIViewController {
         
         embedViewController()
         setupHeaderView()
+        
+        additionalSafeAreaInsetsCoordinator.refresh()
     }
     
     public override func viewIsAppearing(_ animated: Bool) {

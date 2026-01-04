@@ -49,8 +49,7 @@ extension PagerPageViewController {
                 id: "1",
                 title: "Posts",
                 viewControllerProvider: { _ in
-                    UIHostingController(rootView: Text("Hello, World!"))
-                    //CollectionViewController(title: "CollectionView:1", cellCount: 100)
+                    PlainViewController()
                 }),
             Page(
                 id: "2",

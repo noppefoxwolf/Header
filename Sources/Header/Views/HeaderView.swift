@@ -71,7 +71,8 @@ public final class HeaderView: UIView {
     }
 
     private func setup() {
-        stackView.backgroundColor = .systemBackground
+        backgroundColor = .systemBackground
+        
         stackView.spacing = 0
         stackView.axis = .vertical
         stackView.alignment = .fill

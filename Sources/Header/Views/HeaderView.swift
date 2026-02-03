@@ -135,7 +135,46 @@ public final class HeaderView: UIView {
         newView.setContentHuggingPriority(.defaultHigh, for: .vertical)
         setNeedsLayout()
     }
+    
+    public var extendsContentViewHitArea: Bool = false
 
+    public override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        guard extendsContentViewHitArea else {
+            return super.hitTest(point, with: event)
+        }
+        
+        guard isUserInteractionEnabled,
+              !isHidden,
+              alpha > 0.01,
+              contentView.isUserInteractionEnabled,
+              !contentView.isHidden,
+              contentView.alpha > 0.01 else {
+            return super.hitTest(point, with: event)
+        }
+        let pointInContent = convert(point, to: contentView)
+        if descendantHitExists(in: contentView, at: pointInContent, with: event) {
+            return contentView
+        }
+        return super.hitTest(point, with: event)
+    }
+    
+    private func descendantHitExists(in view: UIView, at pointInView: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in view.subviews.reversed() {
+            guard subview.isUserInteractionEnabled,
+                  !subview.isHidden,
+                  subview.alpha > 0.01 else { continue }
+
+            let pointInSubview = view.convert(pointInView, to: subview)
+            guard subview.bounds.contains(pointInSubview) else { continue }
+            if subview.hitTest(pointInSubview, with: event) != nil {
+                return true
+            }
+            if descendantHitExists(in: subview, at: pointInSubview, with: event) {
+                return true
+            }
+        }
+        return false
+    }
 }
 
 private extension UIStackView {

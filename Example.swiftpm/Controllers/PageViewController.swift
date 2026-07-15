@@ -87,7 +87,10 @@ extension PageViewController: UIPageViewControllerDelegate {
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard finished, completed else { return }
+        guard completed else {
+            currentViewController?.contentScrollView(for: .top)?.didCancelMove(to: headerViewController!)
+            return
+        }
         if let scrollView = currentViewController?.contentScrollView(for: .top) {
             scrollView.didMove(to: headerViewController!)
         }

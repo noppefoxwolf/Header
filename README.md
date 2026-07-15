@@ -61,7 +61,10 @@ final class PagesViewController: UIPageViewController, UIPageViewControllerDeleg
     }
 
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        guard finished, completed else { return }
+        guard completed else {
+            viewControllers?.first?.contentScrollView(for: .top)?.didCancelMove(to: headerViewController!)
+            return
+        }
         if let scrollView = viewControllers?.first?.contentScrollView(for: .top) {
             scrollView.didMove(to: headerViewController!)
         }

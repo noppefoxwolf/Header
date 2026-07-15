@@ -183,6 +183,15 @@ public final class HeaderViewController: UIViewController {
         startObservingCurrentScrollView(scrollView)
         additionalSafeAreaInsetsCoordinator.updateObservedScrollViews([scrollView])
     }
+
+    func didCancelTransition() {
+        pendingScrollOffsetSynchronizer?.stopObservingPendingScrollOffsets()
+        if let activeScrollView {
+            additionalSafeAreaInsetsCoordinator.updateObservedScrollViews([activeScrollView])
+        } else {
+            additionalSafeAreaInsetsCoordinator.updateObservedScrollViews([])
+        }
+    }
     
     private func embedViewController() {
         addChild(rootViewController)

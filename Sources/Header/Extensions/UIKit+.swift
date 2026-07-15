@@ -14,4 +14,8 @@ extension UIScrollView {
     public func didMove(to headerViewController: HeaderViewController) {
         headerViewController.didFinishTransition(to: self)
     }
+
+    public func didCancelMove(to headerViewController: HeaderViewController) {
+        headerViewController.didCancelTransition()
+    }
 }

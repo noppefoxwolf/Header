@@ -31,43 +31,35 @@ public final class HeaderView: UIView {
     }
 
     func headerViewHeight(for width: CGFloat) -> CGFloat {
-        let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let bannerHeight = _bannerView.systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        ).height
-        let contentHeight = _contentView.systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        ).height
-        let paletteHeight = _paletteView.systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        ).height
+        let bannerHeight = fittingHeight(of: _bannerView, for: width)
+        let contentHeight = fittingHeight(of: _contentView, for: width)
+        let paletteHeight = fittingHeight(of: _paletteView, for: width)
         return bannerHeight + contentHeight + paletteHeight
     }
 
     func contentViewTopOffset(for width: CGFloat) -> CGFloat {
-        let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let bannerHeight = _bannerView.systemLayoutSizeFitting(
-            targetSize,
-            withHorizontalFittingPriority: .required,
-            verticalFittingPriority: .fittingSizeLevel
-        ).height
-        return bannerHeight
+        fittingHeight(of: _bannerView, for: width)
     }
 
     func paletteHeight(for width: CGFloat) -> CGFloat {
-        let targetSize = CGSize(width: width, height: .greatestFiniteMagnitude)
-        let paletteHeight = _paletteView.systemLayoutSizeFitting(
+        fittingHeight(of: _paletteView, for: width)
+    }
+
+    private func fittingHeight(of view: UIView, for width: CGFloat) -> CGFloat {
+        guard width.isFinite, width > 0 else { return 0 }
+
+        // A finite compressed height prevents SwiftUI hosting views from
+        // receiving CGFloat.greatestFiniteMagnitude as a layout proposal.
+        let targetSize = CGSize(
+            width: width,
+            height: UIView.layoutFittingCompressedSize.height
+        )
+        let height = view.systemLayoutSizeFitting(
             targetSize,
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .fittingSizeLevel
         ).height
-        return paletteHeight
+        return height.isFinite ? max(0, height) : 0
     }
 
     private func setup() {

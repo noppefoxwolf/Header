@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/noppefoxwolf/CollectionViewDistributionalLayout",
       "state" : {
-        "revision" : "34dc3095a9d3a30829096541a89803899c706b51",
-        "version" : "0.0.6"
+        "revision" : "1309e1bb599fc145bb7a2a0c5e4601668feed3e7",
+        "version" : "0.0.7"
       }
     },
     {
@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/noppefoxwolf/Pager",
       "state" : {
-        "revision" : "d48ea258e4f8e3c2356efbf604055677e2361128",
-        "version" : "0.2.9"
+        "revision" : "21ea6b9352b57e10bec507eb855e7b3c48e04a6c",
+        "version" : "0.3.5"
       }
     }
   ],

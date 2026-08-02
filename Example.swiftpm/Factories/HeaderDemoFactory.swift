@@ -1,6 +1,7 @@
 import UIKit
 import SwiftUI
 import Header
+import Pager
 
 @MainActor
 enum HeaderDemoFactory {
@@ -70,7 +71,7 @@ enum HeaderDemoFactory {
         switch palette {
         case .automatic:
             if let vc = rootViewController as? PagerPageViewController {
-                resolvedPalette = .view(vc.pageTabBar)
+                resolvedPalette = .view(PageTabBar(state: vc.state))
             } else {
                 let onSelectPage: ((Int) -> Void)?
                 if let pageViewController = rootViewController as? PageViewController {

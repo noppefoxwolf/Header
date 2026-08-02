@@ -1,4 +1,4 @@
-public import UIKit
+import UIKit
 public import SwiftUI
 
 extension HeaderViewController {

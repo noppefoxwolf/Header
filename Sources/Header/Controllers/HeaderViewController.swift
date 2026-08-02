@@ -262,7 +262,7 @@ public final class HeaderViewController: UIViewController {
                 with: navigationBar,
                 duration: CATransaction.animationDuration(),
                 options: .transitionCrossDissolve
-            ) { [weak navigationItem] in
+            ) { 
                 action()
             }
         } else {
@@ -274,7 +274,7 @@ public final class HeaderViewController: UIViewController {
 private extension HeaderViewController.ScrollState {
     init(from state: HeaderViewLayoutCoordinator.HeaderScrollState) {
         switch state {
-        case .stretched(let adjustedTopOffset):
+        case .stretched:
             self = .stretched
         case .shrinking(_, let isContentViewOverlappingSafeArea):
             self = .shrinking(isContentViewOverlappingSafeArea: isContentViewOverlappingSafeArea)

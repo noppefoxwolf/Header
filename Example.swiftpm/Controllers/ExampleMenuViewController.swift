@@ -7,10 +7,11 @@ final class ExampleMenuViewController: UITableViewController {
         case options
     }
     
-    private enum Demo: CaseIterable {
+    private enum Demo: CaseIterable, Equatable {
         case pageViewController
         case singleCollectionViewController
         case pagerPageViewController
+        case tallHeaderContent
         
         var title: String {
             switch self {
@@ -20,6 +21,8 @@ final class ExampleMenuViewController: UITableViewController {
                 return "Single CollectionView Sample"
             case .pagerPageViewController:
                 return "Pager.PageViewController Sample"
+            case .tallHeaderContent:
+                return "Tall Header Content Sample"
             }
         }
         
@@ -31,6 +34,8 @@ final class ExampleMenuViewController: UITableViewController {
                 return "One collection view with stretch header"
             case .pagerPageViewController:
                 return "Swipe between multiple collection pages"
+            case .tallHeaderContent:
+                return "Title and subtitle content taller than the screen"
             }
         }
      
@@ -43,6 +48,8 @@ final class ExampleMenuViewController: UITableViewController {
                 return CollectionViewController(title: "CollectionView")
             case .pagerPageViewController:
                 return PagerPageViewController(pages: PagerPageViewController.makeDefaultPages())
+            case .tallHeaderContent:
+                return CollectionViewController(title: "Tall Header Content")
             }
         }
     }
@@ -109,7 +116,8 @@ final class ExampleMenuViewController: UITableViewController {
         let palette: HeaderDemoFactory.Palette = paletteEnabled ? .automatic : .none
         let headerViewController = HeaderDemoFactory.make(
             rootViewController: rootViewController,
-            palette: palette
+            palette: palette,
+            tallContent: demo == .tallHeaderContent
         )
         headerViewController.title = demo.title
         navigationController?.pushViewController(headerViewController, animated: true)

@@ -36,7 +36,7 @@ let package = Package(
     ],
     dependencies: [
         .package(path: ".."),
-        .package(url: "https://github.com/noppefoxwolf/Pager", "0.2.0"..<"1.0.0")
+        .package(url: "https://github.com/noppefoxwolf/Pager", "0.3.5"..<"1.0.0")
     ],
     targets: [
         .executableTarget(

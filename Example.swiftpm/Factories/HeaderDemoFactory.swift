@@ -7,7 +7,8 @@ import Pager
 enum HeaderDemoFactory {
     static func make(
         rootViewController: UIViewController & HeaderViewControllerDelegate,
-        palette: Palette = .automatic
+        palette: Palette = .automatic,
+        tallContent: Bool = false
     ) -> HeaderViewController {
         let headerViewController = HeaderViewController(rootViewController: rootViewController)
         headerViewController.delegate = rootViewController
@@ -24,7 +25,7 @@ enum HeaderDemoFactory {
             }
         }
         
-        headerViewController.setHeaderContentView(HeaderContentView())
+        headerViewController.setHeaderContentView(HeaderContentView(isTall: tallContent))
         
         configurePalette(
             for: rootViewController,

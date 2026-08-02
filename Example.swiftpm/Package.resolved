@@ -1,5 +1,5 @@
 {
-  "originHash" : "55b48a03be5e55870f10a47981581ff25b91ba17b0fddcb2f2c354191108c8d1",
+  "originHash" : "e917fd96ca5db8c85c47cafb6b7929dc6984c8e0b317ef6fe26aeddeaa33b600",
   "pins" : [
     {
       "identity" : "collectionviewdistributionallayout",
@@ -15,7 +15,7 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/noppefoxwolf/Pager",
       "state" : {
-        "revision" : "21ea6b9352b57e10bec507eb855e7b3c48e04a6c",
+        "revision" : "a518fc8231f4cbec29043f5c0f869a5f55c1ae9f",
         "version" : "0.3.5"
       }
     }

@@ -15,8 +15,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/noppefoxwolf/Pager",
       "state" : {
-        "revision" : "a518fc8231f4cbec29043f5c0f869a5f55c1ae9f",
-        "version" : "0.3.5"
+        "revision" : "106b74d45285bbaf8becc98700b803d6fec932ba",
+        "version" : "0.3.6"
       }
     }
   ],

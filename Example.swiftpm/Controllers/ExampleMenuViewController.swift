@@ -49,7 +49,7 @@ final class ExampleMenuViewController: UITableViewController {
             case .pagerPageViewController:
                 return PagerPageViewController(pages: PagerPageViewController.makeDefaultPages())
             case .tallHeaderContent:
-                return CollectionViewController(title: "Tall Header Content")
+                return PagerPageViewController(pages: PagerPageViewController.makeTallHeaderPages())
             }
         }
     }

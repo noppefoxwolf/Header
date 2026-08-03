@@ -65,4 +65,27 @@ extension PagerPageViewController {
                 }),
         ]
     }
+
+    static func makeTallHeaderPages() -> [Page] {
+        [
+            Page(
+                id: "tall-posts",
+                title: "Posts",
+                viewControllerProvider: { _ in
+                    CollectionViewController(title: "Tall Header: Posts", cellCount: 100)
+                }),
+            Page(
+                id: "tall-media",
+                title: "Media",
+                viewControllerProvider: { _ in
+                    CollectionViewController(title: "Tall Header: Media", cellCount: 100)
+                }),
+            Page(
+                id: "tall-likes",
+                title: "Likes",
+                viewControllerProvider: { _ in
+                    CollectionViewController(title: "Tall Header: Likes", cellCount: 100)
+                }),
+        ]
+    }
 }

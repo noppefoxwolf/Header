@@ -9,12 +9,13 @@ final class LayoutAttributes {
         safeAreaPadding = EdgeInsets(
             top: insets.top,
             leading: insets.left,
-            bottom: 0,
+            bottom: insets.bottom,
             trailing: insets.right
         )
     }
 }
 
+// workaround:
 struct LayoutAttributesView<ContentView: View>: View {
     let rootView: ContentView
     

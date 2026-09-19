@@ -32,10 +32,10 @@ struct LayoutAttributesView<ContentView: View>: View {
     // workaround: ignoreSafeArea(.bottom)を使うとimageのレイアウトがズレるのでここで無効化する
     var body: some View {
         rootView
-            .safeAreaPadding(.top, ignoreSafeAreaPadding.contains(.top) ? nil : layoutAttributes.safeAreaPadding.top)
-            .safeAreaPadding(.leading, ignoreSafeAreaPadding.contains(.leading) ? nil : layoutAttributes.safeAreaPadding.leading)
-            .safeAreaPadding(.bottom, ignoreSafeAreaPadding.contains(.bottom) ? nil : layoutAttributes.safeAreaPadding.bottom)
-            .safeAreaPadding(.trailing, ignoreSafeAreaPadding.contains(.trailing) ? nil : layoutAttributes.safeAreaPadding.trailing)
+            .safeAreaPadding(.top, ignoreSafeAreaPadding.contains(.top) ? 0 : layoutAttributes.safeAreaPadding.top)
+            .safeAreaPadding(.leading, ignoreSafeAreaPadding.contains(.leading) ? 0 : layoutAttributes.safeAreaPadding.leading)
+            .safeAreaPadding(.bottom, ignoreSafeAreaPadding.contains(.bottom) ? 0 : layoutAttributes.safeAreaPadding.bottom)
+            .safeAreaPadding(.trailing, ignoreSafeAreaPadding.contains(.trailing) ? 0 : layoutAttributes.safeAreaPadding.trailing)
             .clipped()
     }
 }

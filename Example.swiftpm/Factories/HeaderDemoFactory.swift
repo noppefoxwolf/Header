@@ -37,7 +37,6 @@ enum HeaderDemoFactory {
     ) -> UIHostingController<Content> {
         let hostingController = UIHostingController(rootView: rootView)
         hostingController.safeAreaRegions = []
-        hostingController._disableSafeArea = true
         hostingController.sizingOptions = .intrinsicContentSize
         hostingController.view.backgroundColor = .clear
         return hostingController

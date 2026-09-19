@@ -13,8 +13,19 @@ enum HeaderDemoFactory {
         let headerViewController = HeaderViewController(rootViewController: rootViewController)
         headerViewController.delegate = rootViewController
         
-        headerViewController.setHeaderBannerView(HeaderBannerView(), safeAreaRegions: .all)
-        headerViewController.setHeaderContentView(HeaderContentView(isTall: tallContent), safeAreaRegions: .all)
+        let headerBannerHostingController = makeHostingController(rootView: HeaderBannerView())
+        addChild(headerBannerHostingController, to: headerViewController) {
+            if #available(iOS 26.0, *) {
+                let headerBackgroundView = HeaderBackgroundView()
+                let headerBannerView = headerBannerHostingController.view!
+                headerBackgroundView.contentView = headerBannerView
+                headerViewController.headerView.bannerView = headerBackgroundView
+            } else {
+                headerViewController.headerView.bannerView = headerBannerHostingController.view
+            }
+        }
+        
+        headerViewController.setHeaderContentView(HeaderContentView(isTall: tallContent))
         
         configurePalette(
             for: rootViewController,
@@ -24,14 +35,14 @@ enum HeaderDemoFactory {
         
         return headerViewController
     }
-    
+
     enum Palette {
         case none
         case automatic
         case view(UIView)
         case viewController(UIViewController)
     }
-    
+
     private static func makeHostingController<Content: View>(
         rootView: Content
     ) -> UIHostingController<Content> {
@@ -41,7 +52,7 @@ enum HeaderDemoFactory {
         hostingController.view.backgroundColor = .clear
         return hostingController
     }
-    
+
     private static func addChild(
         _ child: UIViewController,
         to parent: UIViewController,
@@ -51,7 +62,7 @@ enum HeaderDemoFactory {
         attach()
         child.didMove(toParent: parent)
     }
-    
+
     private static func configurePalette(
         for rootViewController: UIViewController,
         in headerViewController: HeaderViewController,
@@ -83,7 +94,7 @@ enum HeaderDemoFactory {
         case .viewController(let paletteViewController):
             resolvedPalette = .viewController(paletteViewController)
         }
-        
+
         switch resolvedPalette {
         case .none:
             break
@@ -95,7 +106,7 @@ enum HeaderDemoFactory {
             }
         }
     }
-    
+
     private enum ResolvedPalette {
         case none
         case view(UIView)

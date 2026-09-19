@@ -54,16 +54,24 @@ final class ExampleMenuViewController: UITableViewController {
         }
     }
     
+    private enum Setting: Int, CaseIterable {
+        case palette
+        case bannerImage
+    }
+
     private let demos = Demo.allCases
     private let cellReuseIdentifier = "DemoCell"
     private let switchCellReuseIdentifier = "SwitchCell"
+    private let segmentedCellReuseIdentifier = "SegmentedCell"
     private var paletteEnabled = true
+    private var bannerImageStyle: HeaderBannerView.ImageStyle = .square
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Header Examples"
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: switchCellReuseIdentifier)
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: segmentedCellReuseIdentifier)
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -76,7 +84,7 @@ final class ExampleMenuViewController: UITableViewController {
         case .demos:
             return demos.count
         case .options:
-            return 1
+            return Setting.allCases.count
         }
     }
     
@@ -95,16 +103,31 @@ final class ExampleMenuViewController: UITableViewController {
             cell.accessoryType = .disclosureIndicator
             return cell
         case .options:
-            let cell = tableView.dequeueReusableCell(withIdentifier: switchCellReuseIdentifier, for: indexPath)
-            var content = cell.defaultContentConfiguration()
-            content.text = "Palette"
-            cell.contentConfiguration = content
-            let toggle = UISwitch()
-            toggle.isOn = paletteEnabled
-            toggle.addTarget(self, action: #selector(paletteSwitchChanged(_:)), for: .valueChanged)
-            cell.accessoryView = toggle
-            cell.selectionStyle = .none
-            return cell
+            guard let setting = Setting(rawValue: indexPath.row) else { return UITableViewCell() }
+            switch setting {
+            case .palette:
+                let cell = tableView.dequeueReusableCell(withIdentifier: switchCellReuseIdentifier, for: indexPath)
+                var content = cell.defaultContentConfiguration()
+                content.text = "Palette"
+                cell.contentConfiguration = content
+                let toggle = UISwitch()
+                toggle.isOn = paletteEnabled
+                toggle.addTarget(self, action: #selector(paletteSwitchChanged(_:)), for: .valueChanged)
+                cell.accessoryView = toggle
+                cell.selectionStyle = .none
+                return cell
+            case .bannerImage:
+                let cell = tableView.dequeueReusableCell(withIdentifier: segmentedCellReuseIdentifier, for: indexPath)
+                var content = cell.defaultContentConfiguration()
+                content.text = "Banner Image"
+                cell.contentConfiguration = content
+                let segmentedControl = UISegmentedControl(items: ["Landscape", "Square"])
+                segmentedControl.selectedSegmentIndex = bannerImageStyle == .landscape ? 0 : 1
+                segmentedControl.addTarget(self, action: #selector(bannerImageStyleChanged(_:)), for: .valueChanged)
+                cell.accessoryView = segmentedControl
+                cell.selectionStyle = .none
+                return cell
+            }
         }
     }
     
@@ -117,6 +140,7 @@ final class ExampleMenuViewController: UITableViewController {
         let headerViewController = HeaderDemoFactory.make(
             rootViewController: rootViewController,
             palette: palette,
+            bannerImageStyle: bannerImageStyle,
             tallContent: demo == .tallHeaderContent
         )
         headerViewController.title = demo.title
@@ -129,11 +153,15 @@ final class ExampleMenuViewController: UITableViewController {
         case .demos:
             return "Samples"
         case .options:
-            return "Options"
+            return "Settings"
         }
     }
     
     @objc private func paletteSwitchChanged(_ sender: UISwitch) {
         paletteEnabled = sender.isOn
+    }
+
+    @objc private func bannerImageStyleChanged(_ sender: UISegmentedControl) {
+        bannerImageStyle = sender.selectedSegmentIndex == 0 ? .landscape : .square
     }
 }

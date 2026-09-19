@@ -6,6 +6,9 @@ public protocol HeaderViewControllerDelegate: AnyObject {
 }
 
 public final class HeaderViewController: UIViewController {
+    
+    let layoutAttributes = LayoutAttributes()
+    
     public enum ScrollState: Equatable {
         case stretched
         case shrinking(isContentViewOverlappingSafeArea: Bool)
@@ -137,6 +140,16 @@ public final class HeaderViewController: UIViewController {
         if let activeScrollView {
             applyHeaderLayout(for: activeScrollView)
         }
+    }
+    
+    public override func viewSafeAreaInsetsDidChange() {
+        super.viewSafeAreaInsetsDidChange()
+        layoutAttributes.safeAreaPadding = .init(
+            top: view.safeAreaInsets.top,
+            leading: view.safeAreaInsets.left,
+            bottom: view.safeAreaInsets.bottom,
+            trailing: view.safeAreaInsets.right
+        )
     }
 
     @MainActor deinit {

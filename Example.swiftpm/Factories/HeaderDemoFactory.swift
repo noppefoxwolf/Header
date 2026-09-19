@@ -8,23 +8,13 @@ enum HeaderDemoFactory {
     static func make(
         rootViewController: UIViewController & HeaderViewControllerDelegate,
         palette: Palette = .automatic,
+        bannerImageStyle: HeaderBannerView.ImageStyle = .square,
         tallContent: Bool = false
     ) -> HeaderViewController {
         let headerViewController = HeaderViewController(rootViewController: rootViewController)
         headerViewController.delegate = rootViewController
         
-        let headerBannerHostingController = makeHostingController(rootView: HeaderBannerView())
-        addChild(headerBannerHostingController, to: headerViewController) {
-            if #available(iOS 26.0, *) {
-                let headerBackgroundView = HeaderBackgroundView()
-                let headerBannerView = headerBannerHostingController.view!
-                headerBackgroundView.contentView = headerBannerView
-                headerViewController.headerView.bannerView = headerBackgroundView
-            } else {
-                headerViewController.headerView.bannerView = headerBannerHostingController.view
-            }
-        }
-        
+        headerViewController.setHeaderBannerView(HeaderBannerView(imageStyle: bannerImageStyle))
         headerViewController.setHeaderContentView(HeaderContentView(isTall: tallContent))
         
         configurePalette(

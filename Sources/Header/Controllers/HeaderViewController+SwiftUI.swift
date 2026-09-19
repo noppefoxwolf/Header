@@ -22,17 +22,21 @@ struct LayoutAttributesView<ContentView: View>: View {
     @Environment(LayoutAttributes.self)
     var layoutAttributes: LayoutAttributes
     
-    init(rootView: ContentView) {
+    let ignoreSafeAreaPadding: Edge.Set
+    
+    init(rootView: ContentView, ignoreSafeAreaPadding: Edge.Set) {
         self.rootView = rootView
+        self.ignoreSafeAreaPadding = ignoreSafeAreaPadding
     }
     
+    // workaround: ignoreSafeArea(.bottom)を使うとimageのレイアウトがズレるのでここで無効化する
     var body: some View {
         rootView
-            .safeAreaPadding(.top, layoutAttributes.safeAreaPadding.top)
-            .safeAreaPadding(.leading, layoutAttributes.safeAreaPadding.leading)
-        // workaround: ignoreSafeArea(.bottom)を使うとimageのレイアウトがズレるのでここで無効化する
-//            .safeAreaPadding(.bottom, layoutAttributes.safeAreaPadding.bottom)
-            .safeAreaPadding(.trailing, layoutAttributes.safeAreaPadding.trailing)
+            .safeAreaPadding(.top, ignoreSafeAreaPadding.contains(.top) ? nil : layoutAttributes.safeAreaPadding.top)
+            .safeAreaPadding(.leading, ignoreSafeAreaPadding.contains(.leading) ? nil : layoutAttributes.safeAreaPadding.leading)
+            .safeAreaPadding(.bottom, ignoreSafeAreaPadding.contains(.bottom) ? nil : layoutAttributes.safeAreaPadding.bottom)
+            .safeAreaPadding(.trailing, ignoreSafeAreaPadding.contains(.trailing) ? nil : layoutAttributes.safeAreaPadding.trailing)
+            .clipped()
     }
 }
 
@@ -41,7 +45,7 @@ extension HeaderViewController {
         _ content: ContentView,
     ) {
         let hostingController = UIHostingController(
-            rootView: LayoutAttributesView(rootView: content).environment(layoutAttributes)
+            rootView: LayoutAttributesView(rootView: content, ignoreSafeAreaPadding: .bottom).environment(layoutAttributes)
         )
         hostingController.safeAreaRegions = []
         hostingController.sizingOptions = .intrinsicContentSize
@@ -53,7 +57,9 @@ extension HeaderViewController {
     public func setHeaderContentView<ContentView: View>(
         _ content: ContentView,
     ) {
-        let hostingController = UIHostingController(rootView: LayoutAttributesView(rootView: content).environment(layoutAttributes))
+        let hostingController = UIHostingController(
+            rootView: LayoutAttributesView(rootView: content, ignoreSafeAreaPadding: [.top, .bottom]).environment(layoutAttributes)
+        )
         hostingController.safeAreaRegions = []
         hostingController.sizingOptions = .intrinsicContentSize
         addChild(hostingController)
@@ -64,7 +70,9 @@ extension HeaderViewController {
     public func setHeaderPaletteView<ContentView: View>(
         _ content: ContentView,
     ) {
-        let hostingController = UIHostingController(rootView: LayoutAttributesView(rootView: content).environment(layoutAttributes))
+        let hostingController = UIHostingController(
+            rootView: LayoutAttributesView(rootView: content, ignoreSafeAreaPadding: [.top, .bottom]).environment(layoutAttributes)
+        )
         hostingController.safeAreaRegions = []
         hostingController.sizingOptions = .intrinsicContentSize
         addChild(hostingController)

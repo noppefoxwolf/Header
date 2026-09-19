@@ -36,7 +36,6 @@ struct LayoutAttributesView<ContentView: View>: View {
             .safeAreaPadding(.leading, ignoreSafeAreaPadding.contains(.leading) ? 0 : layoutAttributes.safeAreaPadding.leading)
             .safeAreaPadding(.bottom, ignoreSafeAreaPadding.contains(.bottom) ? 0 : layoutAttributes.safeAreaPadding.bottom)
             .safeAreaPadding(.trailing, ignoreSafeAreaPadding.contains(.trailing) ? 0 : layoutAttributes.safeAreaPadding.trailing)
-            .clipped()
     }
 }
 

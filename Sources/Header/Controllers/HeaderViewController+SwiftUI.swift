@@ -15,7 +15,7 @@ final class LayoutAttributes {
     }
 }
 
-// workaround:
+// workaround: safeAreaRegionsを有効にするとレイアウトでクラッシュするので、自前で送り込む
 struct LayoutAttributesView<ContentView: View>: View {
     let rootView: ContentView
     

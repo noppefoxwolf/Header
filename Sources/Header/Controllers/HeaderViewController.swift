@@ -144,12 +144,7 @@ public final class HeaderViewController: UIViewController {
     
     public override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        layoutAttributes.safeAreaPadding = .init(
-            top: view.safeAreaInsets.top,
-            leading: view.safeAreaInsets.left,
-            bottom: view.safeAreaInsets.bottom,
-            trailing: view.safeAreaInsets.right
-        )
+        layoutAttributes.setSafeAreaInsets(view.safeAreaInsets)
     }
 
     @MainActor deinit {

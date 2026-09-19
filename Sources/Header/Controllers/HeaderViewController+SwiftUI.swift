@@ -4,6 +4,15 @@ public import SwiftUI
 @Observable
 final class LayoutAttributes {
     var safeAreaPadding: EdgeInsets = .init(.zero)
+    
+    func setSafeAreaInsets(_ insets: UIEdgeInsets) {
+        safeAreaPadding = EdgeInsets(
+            top: insets.top,
+            leading: insets.left,
+            bottom: 0,
+            trailing: insets.right
+        )
+    }
 }
 
 struct LayoutAttributesView<ContentView: View>: View {
@@ -27,7 +36,9 @@ extension HeaderViewController {
     public func setHeaderBannerView<ContentView: View>(
         _ content: ContentView,
     ) {
-        let hostingController = UIHostingController(rootView: LayoutAttributesView(rootView: content).environment(layoutAttributes))
+        let hostingController = UIHostingController(
+            rootView: LayoutAttributesView(rootView: content).environment(layoutAttributes)
+        )
         hostingController.safeAreaRegions = []
         hostingController.sizingOptions = .intrinsicContentSize
         addChild(hostingController)

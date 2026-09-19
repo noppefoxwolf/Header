@@ -19,6 +19,7 @@ final class PageViewController: UIPageViewController {
         delegate = self
         dataSource = self
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit")
         // workaround: disabled luminance effect
         if #available(iOS 26.0, *) {
             let scrollView = value(forKey: "_scrollView") as! UIScrollView

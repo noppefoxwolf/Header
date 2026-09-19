@@ -107,6 +107,7 @@ final class CollectionViewController: UICollectionViewController {
         collectionView.backgroundColor = .systemBackground
         collectionView.dataSource = dataSource
         self.title = "タイムライン"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit")
         
         if applyDelay == 0 {
             applySnapshot()

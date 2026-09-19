@@ -64,7 +64,7 @@ final class ExampleMenuViewController: UITableViewController {
     private let switchCellReuseIdentifier = "SwitchCell"
     private let segmentedCellReuseIdentifier = "SegmentedCell"
     private var paletteEnabled = true
-    private var bannerImageStyle: HeaderBannerView.ImageStyle = .square
+    private var bannerImageStyle: HeaderBannerView.ImageStyle = .landscape
     
     override func viewDidLoad() {
         super.viewDidLoad()

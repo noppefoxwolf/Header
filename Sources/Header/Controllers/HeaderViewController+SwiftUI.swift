@@ -27,8 +27,11 @@ struct LayoutAttributesView<ContentView: View>: View {
     
     var body: some View {
         rootView
-            .safeAreaPadding(layoutAttributes.safeAreaPadding)
-            .background(Color.red)
+            .safeAreaPadding(.top, layoutAttributes.safeAreaPadding.top)
+            .safeAreaPadding(.leading, layoutAttributes.safeAreaPadding.leading)
+        // workaround: ignoreSafeArea(.bottom)を使うとimageのレイアウトがズレるのでここで無効化する
+//            .safeAreaPadding(.bottom, layoutAttributes.safeAreaPadding.bottom)
+            .safeAreaPadding(.trailing, layoutAttributes.safeAreaPadding.trailing)
     }
 }
 

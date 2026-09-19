@@ -5,7 +5,6 @@ struct HeaderBannerView: View {
 
     var body: some View {
         backgroundExtendsImage
-            .ignoresSafeArea(edges: .bottom)
     }
     
     @ViewBuilder

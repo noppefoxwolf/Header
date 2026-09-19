@@ -109,6 +109,9 @@ public final class HeaderViewController: UIViewController {
         navigationItem.standardAppearance = appearance
         navigationItem.scrollEdgeAppearance = appearance
         navigationItem.compactScrollEdgeAppearance = appearance
+        if #available(iOS 27.0, *) {
+            navigationItem.navigationBarMinimization.minimizationBehavior = .never
+        }
         
         pendingScrollOffsetSynchronizer = PendingScrollOffsetSynchronizer(
             activeScrollView: { [weak self] in self?.activeScrollView },

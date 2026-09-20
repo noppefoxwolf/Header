@@ -44,7 +44,7 @@ extension HeaderViewController {
         _ content: ContentView,
     ) {
         let hostingController = UIHostingController(
-            rootView: LayoutAttributesView(rootView: content, ignoreSafeAreaPadding: .bottom).environment(layoutAttributes)
+            rootView: LayoutAttributesView(rootView: content, ignoreSafeAreaPadding: [.bottom]).environment(layoutAttributes)
         )
         hostingController.safeAreaRegions = []
         hostingController.sizingOptions = .intrinsicContentSize

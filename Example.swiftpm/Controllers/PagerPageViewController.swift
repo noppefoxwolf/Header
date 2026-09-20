@@ -9,9 +9,9 @@ final class PagerPageViewController: Pager.PageViewController {
         delegate = self
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit")
         
-        if #available(iOS 26.0, *) {
-            collectionView.topEdgeEffect.isHidden = true
-        }
+//        if #available(iOS 26.0, *) {
+//            collectionView.topEdgeEffect.isHidden = true
+//        }
     }
 }
 

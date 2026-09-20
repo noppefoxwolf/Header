@@ -57,6 +57,10 @@ public final class HeaderViewController: UIViewController {
     // MARK: - Child View Controller
     private let rootViewController: UIViewController
     
+    // Workaround: iPhone DuoのnavigationBarがsafeAreaの外まで引かれていないので自前で描画する
+    private let topToolbarBackgroundView = ToolbarBackgroundView()
+    private var topToolbarBackgroundViewHeightConstraint: NSLayoutConstraint?
+    
     public init(rootViewController: UIViewController) {
         self.rootViewController = rootViewController
         super.init(nibName: nil, bundle: nil)
@@ -104,14 +108,16 @@ public final class HeaderViewController: UIViewController {
     public override func viewDidLoad() {
         super.viewDidLoad()
         
-        let appearance = UINavigationBarAppearance()
-        navigationItem.compactAppearance = appearance
-        navigationItem.standardAppearance = appearance
-        navigationItem.scrollEdgeAppearance = appearance
-        navigationItem.compactScrollEdgeAppearance = appearance
-        if #available(iOS 27.0, *) {
-            navigationItem.navigationBarMinimization.minimizationBehavior = .never
-        }
+        topToolbarBackgroundView.alpha = 0
+        topToolbarBackgroundViewHeightConstraint = topToolbarBackgroundView.heightAnchor.constraint(equalToConstant: 0)
+        view.addSubview(topToolbarBackgroundView)
+        topToolbarBackgroundView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            topToolbarBackgroundView.topAnchor.constraint(equalTo: view.topAnchor),
+            topToolbarBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            topToolbarBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            topToolbarBackgroundViewHeightConstraint!
+        ])
         
         pendingScrollOffsetSynchronizer = PendingScrollOffsetSynchronizer(
             activeScrollView: { [weak self] in self?.activeScrollView },
@@ -143,11 +149,18 @@ public final class HeaderViewController: UIViewController {
         if let activeScrollView {
             applyHeaderLayout(for: activeScrollView)
         }
+        view.bringSubviewToFront(topToolbarBackgroundView)
     }
     
     public override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        layoutAttributes.setSafeAreaInsets(view.safeAreaInsets)
+        
+        if isViewLoaded, let window = view.window {
+            layoutAttributes.setSafeAreaInsets(window.safeAreaInsets)
+        }
+        if isViewLoaded {
+            topToolbarBackgroundViewHeightConstraint?.constant = view.safeAreaInsets.top
+        }
     }
 
     @MainActor deinit {
@@ -252,25 +265,13 @@ public final class HeaderViewController: UIViewController {
     }
     
     private func setNavigationBarHidden(_ hidden: Bool, animated: Bool) {
-        guard let navigationBar = navigationController?.navigationBar else { return }
         func action() {
-            func apply(_ appearance: UINavigationBarAppearance?, hidden: Bool) {
-                if hidden {
-                    appearance?.configureWithTransparentBackground()
-                } else {
-                    appearance?.configureWithOpaqueBackground()
-                }
-            }
-            
-            apply(navigationItem.compactAppearance, hidden: hidden)
-            apply(navigationItem.standardAppearance, hidden: hidden)
-            apply(navigationItem.scrollEdgeAppearance, hidden: hidden)
-            apply(navigationItem.compactScrollEdgeAppearance, hidden: hidden)
+            topToolbarBackgroundView.alpha = hidden ? 0 : 1
         }
         
         if animated {
             UIView.transition(
-                with: navigationBar,
+                with: topToolbarBackgroundView,
                 duration: CATransaction.animationDuration(),
                 options: .transitionCrossDissolve
             ) { 

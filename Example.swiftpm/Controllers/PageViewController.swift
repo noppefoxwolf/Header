@@ -21,10 +21,10 @@ final class PageViewController: UIPageViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit")
         // workaround: disabled luminance effect
-        if #available(iOS 26.0, *) {
-            let scrollView = value(forKey: "_scrollView") as! UIScrollView
-            scrollView.topEdgeEffect.isHidden = true
-        }
+//        if #available(iOS 26.0, *) {
+//            let scrollView = value(forKey: "_scrollView") as! UIScrollView
+//            scrollView.topEdgeEffect.isHidden = true
+//        }
         
         if let targetViewController = pages.first {
             setViewControllers([targetViewController], direction: .forward, animated: false) { [weak self] finished in
